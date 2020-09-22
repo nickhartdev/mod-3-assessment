@@ -13,4 +13,5 @@ export const postOrder = order => {
     },
     body: JSON.stringify(order)
   })
+    .catch(err => console.error(err.message));
 }
