@@ -2,6 +2,8 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import OrderForm from './OrderForm';
+import { postOrder } from '../../apiCalls';
+jest.mock('../../apiCalls.js');
 
 describe('OrderForm', () => {
   beforeEach(() => {
@@ -54,12 +56,26 @@ describe('OrderForm', () => {
   it('should display an error if the user tries to submit the order without an ingredient selection', () => {
     const nameField = screen.getByPlaceholderText('Name');
     const submitButton = screen.getByRole('button', { name: 'Submit Order' })
-    
+
     fireEvent.change(nameField, { target: { value: 'Nick' } });
     fireEvent.click(submitButton);
 
     const errorMessage = screen.getByText('Please make sure you\'ve entered a name and order.');
 
     expect(errorMessage).toBeInTheDocument();
+  })
+
+  it('should hide the error message when the user clicks an ingredient or the name field', () => {
+    const nameField = screen.getByPlaceholderText('Name');
+    const submitButton = screen.getByRole('button', { name: 'Submit Order' })
+
+    fireEvent.change(nameField, { target: { value: 'Nick' } });
+    fireEvent.click(submitButton);
+
+    const errorMessage = screen.getByText('Please make sure you\'ve entered a name and order.');
+
+    fireEvent.click(nameField);
+
+    expect(errorMessage).not.toBeInTheDocument();
   })
 })
