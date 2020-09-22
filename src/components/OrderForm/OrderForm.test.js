@@ -7,7 +7,7 @@ jest.mock('../../apiCalls.js');
 
 describe('OrderForm', () => {
   beforeEach(() => {
-    render(<OrderForm postOrder={ postOrder }/>)
+    render(<OrderForm addOrder={ jest.fn() }/>)
   })
 
   it('should render all of the correct elements', () => {

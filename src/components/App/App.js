@@ -5,7 +5,7 @@ import Orders from '../../components/Orders/Orders';
 import OrderForm from '../../components/OrderForm/OrderForm';
 
 class App extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       orders: []
@@ -18,10 +18,9 @@ class App extends Component {
       .catch(err => console.error('Error fetching:', err));
   }
 
-  componentDidUpdate() {
-    getOrders()
-      .then(orders => this.setState({ orders }))
-      .catch(err => console.error('Error fetching:', err));
+  addOrder = order => {
+    postOrder(order)
+      .then(res => this.setState({ orders: [...this.state.orders, res]}))
   }
 
   render() {
@@ -29,7 +28,7 @@ class App extends Component {
       <main className="App">
         <header>
           <h1>Burrito Builder</h1>
-          <OrderForm postOrder={ postOrder }/>
+          <OrderForm addOrder={ this.addOrder }/>
         </header>
 
         <Orders orders={this.state.orders}/>
