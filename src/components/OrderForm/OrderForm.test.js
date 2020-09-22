@@ -7,7 +7,7 @@ jest.mock('../../apiCalls.js');
 
 describe('OrderForm', () => {
   beforeEach(() => {
-    render(<OrderForm />)
+    render(<OrderForm postOrder={ postOrder }/>)
   })
 
   it('should render all of the correct elements', () => {
@@ -77,5 +77,19 @@ describe('OrderForm', () => {
     fireEvent.click(nameField);
 
     expect(errorMessage).not.toBeInTheDocument();
+  })
+
+  it('should clear the input fields when all info is present and the submit button is clicked', () => {
+    const nameField = screen.getByPlaceholderText('Name');
+    const beansButton = screen.getByRole('button', { name: 'beans' });
+    const hotSauceButton = screen.getByRole('button', { name: 'hot sauce' });
+    const submitButton = screen.getByRole('button', { name: 'Submit Order' })
+
+    fireEvent.change(nameField, { target: { value: 'Nick' } });
+    fireEvent.click(beansButton);
+    fireEvent.click(hotSauceButton);
+    fireEvent.click(submitButton);
+
+    expect(nameField.value).toBe('');
   })
 })
