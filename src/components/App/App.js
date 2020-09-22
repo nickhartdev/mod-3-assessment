@@ -18,6 +18,12 @@ class App extends Component {
       .catch(err => console.error('Error fetching:', err));
   }
 
+  componentDidUpdate() {
+    getOrders()
+      .then(orders => this.setState({ orders }))
+      .catch(err => console.error('Error fetching:', err));
+  }
+
   render() {
     return (
       <main className="App">
