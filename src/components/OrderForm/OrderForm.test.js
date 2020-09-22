@@ -24,9 +24,18 @@ describe('OrderForm', () => {
 
     fireEvent.click(beansButton);
     fireEvent.click(hotSauceButton);
-    
+
     const updatedOrderText = screen.getByText('Order: beans, hot sauce');
 
     expect(updatedOrderText).toBeInTheDocument();
   })
+
+  it('should have a name input field that takes user input', () => {
+    const nameField = screen.getByPlaceholderText('Name');
+    fireEvent.change(nameField,  { target: { value: 'Nick' } });
+
+    expect(nameField.value).toBe('Nick');
+  })
+
+  
 })
