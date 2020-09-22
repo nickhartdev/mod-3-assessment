@@ -37,5 +37,29 @@ describe('OrderForm', () => {
     expect(nameField.value).toBe('Nick');
   })
 
-  
+  it('should display an error if the user tries to submit an order without a name', () => {
+    const beansButton = screen.getByRole('button', { name: 'beans' });
+    const hotSauceButton = screen.getByRole('button', { name: 'hot sauce' });
+    const submitButton = screen.getByRole('button', { name: 'Submit Order'})
+
+    fireEvent.click(beansButton);
+    fireEvent.click(hotSauceButton);
+    fireEvent.click(submitButton);
+
+    const errorMessage = screen.getByText('Please make sure you\'ve entered a name and order.');
+
+    expect(errorMessage).toBeInTheDocument();
+  })
+
+  it('should display an error if the user tries to submit the order without an ingredient selection', () => {
+    const nameField = screen.getByPlaceholderText('Name');
+    const submitButton = screen.getByRole('button', { name: 'Submit Order' })
+    
+    fireEvent.change(nameField, { target: { value: 'Nick' } });
+    fireEvent.click(submitButton);
+
+    const errorMessage = screen.getByText('Please make sure you\'ve entered a name and order.');
+
+    expect(errorMessage).toBeInTheDocument();
+  })
 })
