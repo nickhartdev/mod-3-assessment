@@ -39,6 +39,14 @@ describe('OrderForm', () => {
     expect(nameField.value).toBe('Nick');
   })
 
+  it('should display an error if the user tries to submit an order without a name or order selection', () => {
+    const submitButton = screen.getByRole('button', {name: 'Submit Order'})
+    fireEvent.click(submitButton);
+    const errorMessage = screen.getByText('Please make sure you\'ve entered a name and order.');
+
+    expect(errorMessage).toBeInTheDocument();
+  })
+
   it('should display an error if the user tries to submit an order without a name', () => {
     const beansButton = screen.getByRole('button', { name: 'beans' });
     const hotSauceButton = screen.getByRole('button', { name: 'hot sauce' });
@@ -90,6 +98,9 @@ describe('OrderForm', () => {
     fireEvent.click(hotSauceButton);
     fireEvent.click(submitButton);
 
+    const orderText = screen.getByText('Order: Nothing selected');
+
     expect(nameField.value).toBe('');
+    expect(orderText).toBeInTheDocument();
   })
 })
