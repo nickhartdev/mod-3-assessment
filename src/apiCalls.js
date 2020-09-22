@@ -16,3 +16,10 @@ export const postOrder = order => {
     .then(res => res.json())
     .catch(err => console.error(err.message));
 }
+
+export const deleteOrder = orderId => {
+  return fetch(`http://localhost:3001/api/v1/orders/${orderId}`, {
+    method: 'DELETE'
+  })
+    .catch(err => console.error(err.message));
+}

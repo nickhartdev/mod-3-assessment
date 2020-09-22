@@ -11,6 +11,7 @@ const Orders = props => {
             return <li key={order.ingredients.indexOf(ingredient)}>{ingredient}</li>
           })}
         </ul>
+        <button onClick={props.removeOrder} id={order.id}>Delete this order</button>
       </div>
     )
   });
